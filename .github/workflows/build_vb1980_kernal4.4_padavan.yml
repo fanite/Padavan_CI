@@ -7,59 +7,12 @@ on:
         type: choice
         description: 'target to compile'
         options:
-        - Gee_B70
-        - Nokia-Sbell_A-040W-Q
-        - Xiaomi_CR6606
-        - Xiaomi_CR6608
-        - Xiaomi_CR6609
-        - DLINK_DIR-878
-        - DLINK_DIR-882
-        - ZTE_E8820V2
-        - Linksys_EA7500
-        - GHL_R-001
-        - Hair_HAR-20S2U1
-        - JCG_836PRO
-        - JCG_AC860M
-        - JCQ_Q20-PB
-        - JCQ_Q20
-        - JCQ_Q10Pro
-        - JCG_Y2
-        - JDCloud_Luban
-        - JDCloud_1
-        - Phicomm_K2P-NANO
-        - Phicomm_K2P-USB
-        - Phicomm_K2P
-        - Xiaomi_4
-        - Xiaomi_R3G
-        - Xiaomi_R3P-PB
-        - Xiaomi_R3P-SPI
-        - Xiaomi_R3P
-        - Xiaomi_R4A
-        - Motorola_MR2600
-        - Raisecom_MSG1500_Z.00
-        - Raisecom_MSG1500_X.00
-        - Lenovo_NEWIFI2
-        - Diting_NEWIFI3
-        - QianmoBus_B1
-        - Xiaomi_AC2100
-        - Netgear_R6800
         - Redmi_AC2100
-        - Asus_RT-AC85P
-        - SIM_AX1800T
-        - H3C_TX1801
-        - H3C_TX1806
-        - Arcadyan_WE410443-TC
-        - Youhua_WR1200JS
-        - Youhua_WR330
-        - Xiaoyu_C1
-        - Xiaoyu_C3
-        - Xiaoyu_C5
-        - ZTE_E8820S
-        default: SIM_AX1800T
+        default: Redmi_AC2100
       plugins:
         description: 'json format string of include configs'
         required: true
-        default: '{"vpnsvr":"n","vpncli":"n","vpncmd":"n","ss":"y","v2ray":"n","xray":"y","trojan":"y","ssobfs":"y","dnsforwarder":"n","adbyby":"n","adguardhome":"n","smartdns":"n","aliddns":"n","zerotier":"n","ddnsto":"n","wireguard":"n","frpc":"y","aldrive":"n","sqm":"y","mentohust":"n","scutclient":"n","njitclient":"n","minieap":"n","dogcom":"n"}'
+        default: '{"vpnsvr":"n","vpncli":"n","vpncmd":"n","ss":"n","v2ray":"n","xray":"n","trojan":"n","ssobfs":"n","dnsforwarder":"n","adbyby":"n","adguardhome":"y","smartdns":"n","aliddns":"n","zerotier":"y","ddnsto":"n","wireguard":"n","frpc":"y","aldrive":"n","sqm":"y","mentohust":"n","scutclient":"n","njitclient":"n","minieap":"n","dogcom":"n"}'
       rainbowui:
         type: boolean
         description: 'apply rainbow ui'
@@ -81,11 +34,11 @@ on:
         description: 'upload firmware to anonfiles'
         default: 'false'
 env:
-  REPOSITORY_URL: https://github.com/vb1980/padavan-4.4.git
+  REPOSITORY_URL: https://github.com/tsl0922/padavan.git
   WORK_PATH: /opt/padavan-4.4
   TIME_ZONE: Asia/Shanghai
   FIRMWARE_DATEPREFIX: $(date +"%Y%m%d")
-  FIRMWARE_AUTHOR: vb1980
+  FIRMWARE_AUTHOR: Fanite
   FIRMWARE_PATH: /opt/firmwares
 jobs:
   build:
@@ -426,8 +379,16 @@ jobs:
         #########################################################################################
         #自定义添加其它功能请参考源码configs/templates/目录下的config文件。按照上面的格式添加即可
         #格式如下：
-        #sed -i '/自定义项/d' .config
-        #echo "自定义项=y" >> .config
+        sed -i 's/192.168.2/192.168.50/g' user/shared/src/defaults.h
+        sed -i 's/192.168.50.1/192.168.50.2/g' user/shared/src/defaults.h
+        sed -i 's/BOARD_PID "_%s"/"OpenWrt"/g' user/shared/src/defaults.h
+        sed -i 's/BOARD_PID "_5G_%s"/"OpenWrt"/g' user/shared/src/defaults.h
+        sed -i 's/BOARD_PID "_GUEST_%s"/"OpenWrt"/g' user/shared/src/defaults.h
+        sed -i 's/BOARD_PID "_GUEST_5G_%s"/"OpenWrt"/g' user/shared/src/defaults.h
+        sed -i 's/1234567890/mn5e2kmg/g' user/shared/src/defaults.h
+        sed -i 's/DEF_ROOT_PASSWORD	"admin"/DEF_ROOT_PASSWORD	"mn5e2kmg"/g' user/shared/src/defaults.h
+        sed -i 's/"lan_gateway"\, DEF_LAN_ADDR/"lan_gateway"\, "192.168.50.1"/g' user/shared/src/defaults.c
+        sed -i 's/"lan_dns1"\, ""/"lan_dns1"\, "192.168.50.1"/g' user/shared/src/defaults.c
         sed -i "s/FIRMWARE_BUILDS_REV=.*/FIRMWARE_BUILDS_REV=${{ github.event.inputs.firmwarever }}/g" ./versions.inc
         echo '更新版本号时间'
         #########################################################################################
