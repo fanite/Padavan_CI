@@ -379,16 +379,16 @@ jobs:
         #########################################################################################
         #自定义添加其它功能请参考源码configs/templates/目录下的config文件。按照上面的格式添加即可
         #格式如下：
-        sed -i 's/192.168.2/192.168.50/g' user/shared/src/defaults.h
-        sed -i 's/192.168.50.1/192.168.50.2/g' user/shared/src/defaults.h
-        sed -i 's/BOARD_PID "_%s"/"OpenWrt"/g' user/shared/src/defaults.h
-        sed -i 's/BOARD_PID "_5G_%s"/"OpenWrt"/g' user/shared/src/defaults.h
-        sed -i 's/BOARD_PID "_GUEST_%s"/"OpenWrt"/g' user/shared/src/defaults.h
-        sed -i 's/BOARD_PID "_GUEST_5G_%s"/"OpenWrt"/g' user/shared/src/defaults.h
-        sed -i 's/1234567890/mn5e2kmg/g' user/shared/src/defaults.h
-        sed -i 's/DEF_ROOT_PASSWORD	"admin"/DEF_ROOT_PASSWORD	"mn5e2kmg"/g' user/shared/src/defaults.h
-        sed -i 's/"lan_gateway"\, DEF_LAN_ADDR/"lan_gateway"\, "192.168.50.1"/g' user/shared/src/defaults.c
-        sed -i 's/"lan_dns1"\, ""/"lan_dns1"\, "192.168.50.1"/g' user/shared/src/defaults.c
+        sed -i 's/192.168.2/192.168.50/g' user/shared/defaults.h
+        sed -i 's/192.168.50.1/192.168.50.2/g' user/shared/defaults.h
+        sed -i 's/BOARD_PID "_%s"/"OpenWrt"/g' user/shared/defaults.h
+        sed -i 's/BOARD_PID "_5G_%s"/"OpenWrt"/g' user/shared/defaults.h
+        sed -i 's/BOARD_PID "_GUEST_%s"/"OpenWrt"/g' user/shared/defaults.h
+        sed -i 's/BOARD_PID "_GUEST_5G_%s"/"OpenWrt"/g' user/shared/defaults.h
+        sed -i 's/1234567890/mn5e2kmg/g' user/shared/defaults.h
+        sed -i 's/DEF_ROOT_PASSWORD	"admin"/DEF_ROOT_PASSWORD	"mn5e2kmg"/g' user/shared/defaults.h
+        sed -i 's/"lan_gateway"\, DEF_LAN_ADDR/"lan_gateway"\, "192.168.50.1"/g' user/shared/defaults.c
+        sed -i 's/"lan_dns1"\, ""/"lan_dns1"\, "192.168.50.1"/g' user/shared/defaults.c
         sed -i "s/FIRMWARE_BUILDS_REV=.*/FIRMWARE_BUILDS_REV=${{ github.event.inputs.firmwarever }}/g" ./versions.inc
         echo '更新版本号时间'
         #########################################################################################
